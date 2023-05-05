@@ -1,9 +1,10 @@
 package module1
 
+import module1.list.List
+
 import java.util.UUID
 import scala.annotation.tailrec
 import java.time.Instant
-
 import scala.language.postfixOps
 
 
@@ -192,6 +193,7 @@ object hof{
 
  object opt {
 
+
   /**
    *
    * Реализовать структуру данных Option, который будет указывать на присутствие либо отсутсвие результата
@@ -273,64 +275,94 @@ object hof{
     * Cons - непустой, содердит первый элемент (голову) и хвост (оставшийся список)
     */
 
-    trait List[+T]{
-
-    }
-
-    object List{
-      case class ::[A](head: A, tail: List[A]) extends List[A]
-      case object Nil extends List[Nothing]
-
-      def apply[A](v: A*): List[A] =
-        if(v.isEmpty) List.Nil
-        else ::(v.head, apply(v.tail:_*))
-    }
-
-   List(1, 2, 3, 4)
+    trait List[+T] {
 
 
-   /**
-     * Метод cons, добавляет элемент в голову списка, для этого метода можно воспользоваться названием `::`
-     *
-     */
+     /**
+      * Метод cons, добавляет элемент в голову списка, для этого метода можно воспользоваться названием `::`
+      *
+      */
 
-    /**
+     def ::[B >: T](el: B): List[B] = this match {
+       case list@List.::(_, _) => List.::(el, list)
+       case List.Nil => List(el)
+     }
+
+     /**
       * Метод mkString возвращает строковое представление списка, с учетом переданного разделителя
       *
       */
 
-    /**
+     def mkString(delim: String): String = {
+       val sb = new StringBuilder()
+
+       @tailrec
+       def mk(list: List[T]): Unit = {
+         list match {
+           case List.Nil =>
+           case List.::(h, List.Nil) => sb.append(h)
+           case List.::(head, tail) =>
+             sb.append(head)
+             sb.append(delim)
+             mk(tail)
+         }
+       }
+
+       mk(this)
+       sb.toString()
+     }
+
+
+   }
+
+     object List {
+       case class ::[A](head: A, tail: List[A]) extends List[A]
+
+       case object Nil extends List[Nothing]
+
+       def apply[A](v: A*): List[A] =
+         if (v.isEmpty) List.Nil
+         else ::(v.head, apply(v.tail: _*))
+     }
+
+     private val value: List[Int] = List(1, 2, 3, 4)
+     println(value.::(6))
+
+
+
+
+     /**
       * Конструктор, позволяющий создать список из N - го числа аргументов
       * Для этого можно воспользоваться *
-      * 
+      *
       * Например вот этот метод принимает некую последовательность аргументов с типом Int и выводит их на печать
       * def printArgs(args: Int*) = args.foreach(println(_))
       */
 
-    /**
+     /**
       *
       * Реализовать метод reverse который позволит заменить порядок элементов в списке на противоположный
       */
 
-    /**
+     /**
       *
       * Реализовать метод map для списка который будет применять некую ф-цию к элементам данного списка
       */
 
 
-    /**
+     /**
       *
       * Реализовать метод filter для списка который будет фильтровать список по некому условию
       */
 
-    /**
+     /**
       *
       * Написать функцию incList котрая будет принимать список Int и возвращать список,
       * где каждый элемент будет увеличен на 1
       */
 
 
-    /**
+     /**
       *
       * Написать функцию shoutString котрая будет принимать список String и возвращать список,
       * где к каждому элементу будет добавлен префикс в виде '!'
