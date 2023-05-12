@@ -165,7 +165,7 @@ object hof{
    case class Record(value: String)
 
    case class Request()
-   
+
    object Request {
        def parse(str: String): Request = ???
    }
@@ -313,9 +313,45 @@ object hof{
      }
 
 
+
+
+     /**
+      *
+      * Реализовать метод reverse который позволит заменить порядок элементов в списке на противоположный
+      */
+//123
+// 321
+    def reverse: List[T] = {
+
+       List()
+//
+//      @tailrec
+//      def getElem(list: List[T]): List[T] = list match {
+//        case list@List.::(head, List.Nil) => list.::(head)
+//        case List.::(head, tail) => getElem(tail)
+//      }
+//
+//      this match {
+//        case List.::(head, tail) => List(head).::(tail)
+//        //         case list@List.::(_, List.Nil) => list
+//        //         case List.Nil => List.Nil
+//      }
+    }
    }
 
-     object List {
+
+
+
+   /**
+    * Конструктор, позволяющий создать список из N - го числа аргументов
+    * Для этого можно воспользоваться *
+    *
+    * Например вот этот метод принимает некую последовательность аргументов с типом Int и выводит их на печать
+    * def printArgs(args: Int*) = args.foreach(println(_))
+    */
+
+
+   object List {
        case class ::[A](head: A, tail: List[A]) extends List[A]
 
        case object Nil extends List[Nothing]
@@ -326,23 +362,19 @@ object hof{
      }
 
      private val value: List[Int] = List(1, 2, 3, 4)
-     println(value.::(6))
+//     println(value.::(6))
+     println(value.reverse)
+     println("value.reverse")
 
 
 
 
-     /**
-      * Конструктор, позволяющий создать список из N - го числа аргументов
-      * Для этого можно воспользоваться *
-      *
-      * Например вот этот метод принимает некую последовательность аргументов с типом Int и выводит их на печать
-      * def printArgs(args: Int*) = args.foreach(println(_))
-      */
 
-     /**
-      *
-      * Реализовать метод reverse который позволит заменить порядок элементов в списке на противоположный
-      */
+
+
+
+
+
 
      /**
       *
