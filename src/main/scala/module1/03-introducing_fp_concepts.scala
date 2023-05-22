@@ -351,6 +351,26 @@ object hof{
        }
      }
 
+
+     /**
+      *
+      * Реализовать метод filter для списка который будет фильтровать список по некому условию
+      */
+
+     def filter(f: T => Boolean): List[T] = {
+       @tailrec
+       def apply(a: List[T], b: List[T]): List[T] = a match {
+         case List.::(head, tail) => apply(tail, if (f(head)) b.::(head) else b)
+         case List.Nil => b
+       }
+
+       this match {
+         case List.::(head, tail) => apply(tail, if (f(head)) List(head) else List.Nil)
+         case List.Nil => List.Nil
+       }
+
+     }
+
    }
 
 
@@ -386,11 +406,6 @@ object hof{
 
 
 
-
-     /**
-      *
-      * Реализовать метод filter для списка который будет фильтровать список по некому условию
-      */
 
      /**
       *
