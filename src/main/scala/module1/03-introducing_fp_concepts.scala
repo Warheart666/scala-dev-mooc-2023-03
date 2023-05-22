@@ -313,30 +313,44 @@ object hof{
      }
 
 
-
-
      /**
       *
       * Реализовать метод reverse который позволит заменить порядок элементов в списке на противоположный
       */
-//123
-// 321
-    def reverse: List[T] = {
+     def reverse: List[T] = {
+       @tailrec
+       def rev(list: List[T], acc: List[T]): List[T] = list match {
+         case List.Nil => acc
+         case List.::(head, tail) => rev(tail, acc.::(head))
+       }
 
-       List()
-//
-//      @tailrec
-//      def getElem(list: List[T]): List[T] = list match {
-//        case list@List.::(head, List.Nil) => list.::(head)
-//        case List.::(head, tail) => getElem(tail)
-//      }
-//
-//      this match {
-//        case List.::(head, tail) => List(head).::(tail)
-//        //         case list@List.::(_, List.Nil) => list
-//        //         case List.Nil => List.Nil
-//      }
-    }
+       this match {
+         case List.::(head, tail) => rev(tail, List(head))
+         case List.Nil => List.Nil
+       }
+
+     }
+
+     /**
+      *
+      * Реализовать метод map для списка который будет применять некую ф-цию к элементам данного списка
+      */
+
+     def map[A](f: T => A): List[A] = {
+       @tailrec
+       def apply(t: List[T], a: List[A]): List[A] = {
+         t match {
+           case List.::(head, tail) => apply(tail, a.::(f(head)))
+           case List.Nil => a
+         }
+       }
+
+       this match {
+         case List.::(head, tail) => apply(tail,List(f(head)))
+         case List.Nil => List.Nil
+       }
+     }
+
    }
 
 
@@ -371,15 +385,6 @@ object hof{
 
 
 
-
-
-
-
-
-     /**
-      *
-      * Реализовать метод map для списка который будет применять некую ф-цию к элементам данного списка
-      */
 
 
      /**
